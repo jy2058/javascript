@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Document</title>
+		<script type="text/javascript">
+			function myClick(){
+				
+				var obj1 = document.getElementsByName("gugu")[0];
+				var dan = obj1.options[obj1.selectedIndex].value;
+
+				var text ="";
+				var obj = document.getElementById("mytextarea");
+				for(var i = 1; i <= 9; i++){
+					text += dan + "*" +i+ "=" + (dan * i) + "\n";
+				}
+				obj.value = text;
+			}
+		</script>
+	</head>
+	<body>
+		<table border ="1">
+			<tr>
+				<td>
+				<select name="gugu" onchange="myClick()">
+					<option value="2" selected>2단</option>
+					<option value="3">3단</option>
+					<option value="4">4단</option>
+					<option value="5">5단</option>
+					<option value="6">6단</option>
+					<option value="7">7단</option>
+					<option value="8">8단</option>
+					<option value="9">9단</option>
+				</select>
+				</td>
+				<td>
+					<input type="button" onclick = "myClick()" value="show"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<textarea id="mytextarea" rows="10" cols="11"></textarea>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

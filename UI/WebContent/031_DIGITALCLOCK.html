@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Document</title>
+		<script type="text/javascript">
+			function myClick(){
+				setInterval(function(){
+					test();
+				}, 1000);
+			}
+			function test(){
+				var now = new Date;
+				
+				var hour = now.getHours();
+				var minute = now.getMinutes();
+				var second = now.getSeconds();
+				
+				var objDiv = document.getElementById("mydiv");
+				
+				objDiv.innerHTML = ( hour < 10 ? '0' : '') 
+									+ hour + " : " + (minute < 10 ? '0' : '') 
+									+ minute + " : " + (second < 10 ? '0' : '') 
+									+ second;
+			}
+		</script>
+	</head>
+	<body>
+		<div id="mydiv"></div>
+		<a href="javascript:myClick()">클릭</a>
+	</body>
+</html>

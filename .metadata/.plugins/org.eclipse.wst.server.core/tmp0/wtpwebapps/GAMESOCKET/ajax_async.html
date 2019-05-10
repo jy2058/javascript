@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>ajax 동기 비동기 테스트</title>
+<script src="jquery-1.12.4.js"></script>
+<script type="text/javascript">
+function fn_ajax(){
+	alert("good1");
+	$.ajax({
+		type : "get",
+		url : "myasync",
+		data : { historys: "",
+				 winner: "" },
+		dataType : "json",
+		async : false,
+
+		success : function(data) {
+			alert(data.message);
+			alert("good2");
+			console.log(data.message);
+		},
+		error : function(xhr, status, error) {
+		console.log("에러!: " + error);
+		},
+	});
+	alert("good3");
+}
+
+
+
+
+</script>
+
+</head>
+<body>
+<a href="javascript:fn_ajax()">async</a>
+</body>
+</html>

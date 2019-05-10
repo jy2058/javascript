@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Document</title>
+		<script src="jquery-1.12.4.js"></script>
+		<script type="text/javascript">
+			function myClick(){
+// 				var obj = document.getElementsByName("gugu")[0];
+// 				var value = obj.options[obj.selectedIndex].value;
+// 				for(var i = 1; i <= 9; i++){
+// 					document.write(value + "*" +i+ "=" + (value * i) + "<br>");
+// 				}
+
+				/*
+				JQuery로 아래와 같이 사용
+				*/
+				
+				var dan = $("#myselect").val();
+
+				$("#my_body").html("");
+				for(var i = 1; i <= 9; i++){
+					$("#my_body").append(dan + "*" + i + "=" + (dan * i) + "<br>");
+				}
+			}
+			
+			
+// 			$("#my_body").html("2*1=2"); 
+			
+// 			$("#my_body").html("");	//버튼 지우기
+// 			for(var i = 1; i < 19; i++){
+// 				$("#my_body").append("2*"+i+"=" + (i*2) + "<br>");
+// 			}
+		</script>
+	</head>
+	<body id="my_body" >
+		<select id="myselect">
+			<option value="2" selected>2단</option>
+			<option value="3">3단</option>
+			<option value="4">4단</option>
+			<option value="5">5단</option>
+			<option value="6">6단</option>
+			<option value="7">7단</option>
+			<option value="8">8단</option>
+			<option value="9">9단</option>
+			
+		</select>
+		<input type="button" onclick = "myClick()" value="show"/>
+	</body>
+</html>

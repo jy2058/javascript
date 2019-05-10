@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Document</title>
+		<style type="text/css">
+			body {
+			    background: black;
+			}
+	
+			.clock {
+			    position: absolute;
+			    top: 50%;
+			    left: 50%;
+			    transform: translateX(-50%) translateY(-50%);
+			    color: #17D4FE;
+			    font-size: 60px;
+			    font-family: Orbitron;
+			    letter-spacing: 7px;
+			}
+		</style>
+		<script type="text/javascript">
+			
+			function myClick(){
+							setInterval(function(){
+								test();
+							}, 1000);
+						}
+			function test(){
+				var now = new Date;
+				
+				var hour = now.getHours();
+				var minute = now.getMinutes();
+				var second = now.getSeconds();
+				
+				var str_hour = (100 + hour) + "";
+				var str_minute = (100 + minute) + "";
+				var str_second = (100 + second) + "";
+				
+				str_hour = str_hour.substring(1, 3);	
+				str_minute = str_minute.substring(1, 3);	
+				str_second = str_second.substring(1, 3);	
+			
+				var objDiv = document.getElementById("mydiv");
+				
+				objDiv.innerHTML = str_hour + ":" + str_minute + ":" + str_second;
+			}
+
+			showTime();
+		</script>
+	</head>
+	<body>
+		<div id="mydiv" class="clock"></div>
+		<a href="javascript:myClick()">클릭</a>
+	</body>
+</html>

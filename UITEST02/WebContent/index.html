@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="jquery-1.12.4.js"></script>
+<script type="text/javascript">
+	function myDupl(){
+		$.ajax({
+			type : "get",
+			url : "myservletdupl",
+			data : { co_id : $("input[name=co_id]").val() },
+			dataType : "json",
+
+			success : function(data) {
+				console.log(data.message);
+				if(data.message == "OK"){
+					$("input[name=co_id]").attr("readonly", true);
+					alert("사용 가능 한 아이디 입니다.");
+				}else {
+					$("input[name=co_id]").val("");
+					$("input[name=co_id]").focus();
+					alert("사용 할 수 없는 아이디 입니다.");
+					
+				}
+			},
+			error : function(xhr, status, error) {
+				console.log("에러!: " + error);
+			},
+		});
+	}
+	function myAddr(){
+		 window.open("popup.html", "popup01", "width=400, height=300, left=100, top=50"); 
+	}
+	
+	function fn_save(){
+		var obj_co_id = document.frm.co_id;
+		if(obj_co_id.value == ""){
+			alert("아이디는 기입하셔야 합니다.");
+			obj_co_id.focus();
+			return;
+		}
+		
+		var obj_co_name = document.frm.co_name;
+		if(obj_co_name.value == ""){
+			alert("이름은 기입하셔야 합니다.");
+			obj_co_name.focus();
+			return;
+		}
+		
+		var obj_pwd = document.frm.pwd;
+		if(obj_pwd.value == ""){
+			alert("패스워드는 기입하셔야 합니다.");
+			obj_pwd.focus();
+			return;
+		}
+		
+		var obj_zipcode = document.frm.zipcode;
+		if(obj_zipcode.value == ""){
+			alert("우편번호를 기입하셔야 합니다.");
+			obj_zipcode.focus();
+			return;
+		}
+	
+		var obj_addr1 = document.frm.addr1;
+		if(obj_addr1.value == ""){
+			alert("주소를 기입하셔야 합니다.");
+			obj_addr1.focus();
+			return;
+		}
+		
+		var obj_addr2 = document.frm.addr2;
+		if(obj_addr1.value == ""){
+			alert("주소를 기입하셔야 합니다.");
+			obj_addr1.focus();
+			return;
+		}
+		
+		document.frm.submit();
+		alert("가입이 완료 되었습니다.")
+	}
+
+</script>
+</head>
+<body>
+<form name="frm" action="">
+	
+	<table>
+		<tr>
+			<td>아이디</td>
+			<td><input type="text" name="co_id"/></td>
+			<td><input type="button" value="중복체크" onclick="myDupl()"/></td>
+		</tr>
+		<tr>
+			<td>이름</td>
+			<td><input type="text" name="co_name"/></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>패스워드</td>
+			<td><input type="text" name="pwd"/></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>우편번호</td>
+			<td><input type="text" name="zipcode"/></td>
+			<td><input type="button" value="주소찾기" onclick="myAddr()"/></td>
+		</tr>
+		<tr>
+			<td>주소</td>
+			<td><input type="text" name="addr1"/></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>상세주소</td>
+			<td><input type="text" name="addr2"/></td>
+			<td>&nbsp;</td>
+		</tr>
+		
+	</table>
+	<input type="button" value="가입" onclick="fn_save()"/>
+</form>
+</body>
+</html>

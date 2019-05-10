@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Document</title>
+		<script src="jquery-1.12.4.js"></script>
+		<script type="text/javascript">
+			function myClick(){
+				
+// 				var obj1 = document.getElementsByName("gugu")[0];
+// 				var dan = obj1.options[obj1.selectedIndex].value;
+
+// 				var text ="";
+// 				var obj = document.getElementById("mytextarea");
+// 				for(var i = 1; i <= 9; i++){
+// 					text += dan + "*" +i+ "=" + (dan * i) + "\n";
+// 				}
+// 				obj.value = text;
+
+
+
+				/*
+				JQuery로 아래와 같이 사용
+				*/
+
+				var dan = $("#myselect").val();
+
+				$("#mytextarea").html("");
+				for(var i = 1; i <= 9; i++){
+					$("#mytextarea").append(dan + "*" + i + "=" + (dan * i) + "\n");
+					//textarea는 br 태그 안먹는다. 그래서 \n 쓴다.
+				}
+			}
+			
+			$(document).ready(function(){	// 버튼이 생긴 후 기능을 사용하기 위해서
+											// 실행하면 기능이 만들어지게!
+											// 그냥 위에 있으면 존재하지 않는 버튼이라 
+											// 사용할 수 없음
+				// onclick = "myClick()" 기능을 JQuery 로 구현
+				$("#my_btn").on("click", function(){
+					myClick();
+				});
+			
+				$("#myselect").on("change", function(){
+					myClick();
+				});
+			});
+			
+		</script>
+	</head>
+	<body>
+		<table border ="1">
+			<tr>
+				<td>
+				<select id="myselect" onchange="myClick()">
+					<option value="2" selected>2단</option>
+					<option value="3">3단</option>
+					<option value="4">4단</option>
+					<option value="5">5단</option>
+					<option value="6">6단</option>
+					<option value="7">7단</option>
+					<option value="8">8단</option>
+					<option value="9">9단</option>
+				</select>
+				</td>
+				<td>
+					<input id="my_btn" type="button" value="show"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<textarea id="mytextarea" rows="10" cols="11"></textarea>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

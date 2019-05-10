@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Document</title>
+	</head>
+	<script src="jquery-1.12.4.js"></script>	
+	<script type="text/javascript">
+		function myClick(){
+		//	var txt = $(".my_txt").val();
+		//	alert(txt);
+		
+		//  $(".my_txt").val("fad");
+		//  $(".mydiv:eq(1)").html("솔이"); //해당 인덱스에 넣기
+		//  $(".mydiv:gt(1)").html("솔이"); //해당 인덱스보다 큰 인덱스에 넣기
+		//  $(".mydiv:lt(1)").html("솔이"); //해당 인덱스보다 작은 인덱스에 넣기
+		  console.log( $(".mydiv:lt(2)").text());
+		}
+	</script>
+	<body>
+		<input class="my_txt" type ="text">
+		<input type="button" onClick="myClick()">
+		
+		<div class="mydiv">6</div>
+		<div class="mydiv">7</div>
+		<div class="mydiv">8</div>
+		
+	</body>
+</html>

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Document</title>
+	</head>
+	<body>
+		<ul style="list-style-type: square;"">
+			<li>강다니엘</li>
+			<li>아이즈원</li>
+		</ul>
+		
+		<ol style="list-style-type: hangul;">
+			<li>코란도스포츠</li>
+			<li>마세라티</li>
+		</ol>		
+	</body>

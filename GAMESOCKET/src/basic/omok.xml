@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+			PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+			"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- namespace속성 : 아래에서 작성한 SQL을 호출할 때 같이 사용된다. -->			
+<sqlMap namespace="omok">
+ 
+	 <update id="insert" parameterClass="omokVO">
+			insert into omok (pan, pan_order, history, winner)
+	 		values ( #pan#, #pan_order#, #history#, #winner# )
+	 </update>
+	  
+	 <!-- select 연습 -->
+	 <select id="selectList" resultClass="omokVO">
+	 		select pan, pan_order, history, winner from omok
+	 </select>
+	 
+	 <select id="selectMax" resultClass="omokVO">
+	 	select idx_omok.nextval as pan from dual
+	 </select>
+	 
+	 <select id="selectListPan" resultClass="omokVO">
+	 		select distinct pan from omok
+	 </select>
+	 
+ 	 <select id="selectListPans" parameterClass="omokVO" resultClass="omokVO">
+	 		select pan, pan_order, history, winner from omok
+			where pan = #pan#
+			order by pan_order
+	 </select>
+	 
+	 <select id="selectListHist" parameterClass="omokVO" resultClass="omokVO">
+	 		select pan, pan_order, history, winner 
+	 		from omok
+			where history = #history#
+	 </select>
+
+	 <select id="selectListNext2" parameterClass="omokVO" resultClass="omokVO">
+	 		select pan, pan_order, history, winner 
+	 		from omok
+			where history = #history# and 
+			pan = #pan# and 
+			pan_order = #pan_order#
+	 </select>
+</sqlMap>			
+
+
+
+
+

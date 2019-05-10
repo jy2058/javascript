@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.jst.jsp.ui.internal.preferences.ui.JSPTemplatePreferencePage$JSPEditTemplateDialog_dialogBounds">
+		<item value="612" key="DIALOG_WIDTH"/>
+		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
+		<item value="435" key="DIALOG_HEIGHT"/>
+		<item value="8" key="DIALOG_X_ORIGIN"/>
+		<item value="175" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="var history" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="var history"/>
+			<item value="var histoet"/>
+			<item value="var"/>
+			<item value="list"/>
+			<item value="try {"/>
+			<item value="(e)"/>
+			<item value="e"/>
+			<item value="status"/>
+		</list>
+		<list key="replacehistory">
+			<item value="int"/>
+			<item value="try {"/>
+			<item value="(Exception e)"/>
+			<item value="Exception e"/>
+			<item value="int_status"/>
+			<item value="int i, int j"/>
+			<item value="public int"/>
+			<item value="&lt;td&gt;&lt;img class=&quot;grid&quot; src=&quot;01/0.jpg&quot;&gt;&lt;/td&gt;"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="637" key="DIALOG_WIDTH"/>
+		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
+		<item value="380" key="DIALOG_HEIGHT"/>
+		<item value="212" key="DIALOG_Y_ORIGIN"/>
+		<item value="969" key="DIALOG_X_ORIGIN"/>
+	</section>
+</section>

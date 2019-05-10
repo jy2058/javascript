@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Document</title>
+		<style type="text/css">
+			div {
+				position: absolute; 
+				top: 0px; 
+				left: 0px;
+				background-color: #FFFFD2;  
+				}
+				
+			body {
+			    background: black;
+				}
+		</style>
+		<script type="text/javascript">
+			var idx_time = 0;
+			var score = 0;
+			
+			function gamestart(){
+				var objScore = document.getElementById("div_score");
+				objScore.innerHTML = score;
+				
+				makeWord();
+				idx_time = setInterval(function(){onestep_down()}, 10); // 일정시간 반복실행
+			}
+			function makeWord(){
+				var objBody = document.getElementById("my_body");
+				var arr_word = new Array();
+				arr_word.push("피자");
+				arr_word.push("닭발");
+				arr_word.push("닭갈비");
+				arr_word.push("라멘");
+				arr_word.push("파스타");
+				arr_word.push("족발");
+				arr_word.push("떡볶이");
+				arr_word.push("깐풍기");
+				arr_word.push("닭강정");
+				arr_word.push("김치만두");
+				
+				for(var i = 0; i < arr_word.length; i++){
+					var random = parseInt(Math.random() * 500);
+					var randomY = parseInt(Math.random() * 500)-500;
+					
+					objBody.innerHTML += "<div class='div_word' style = 'top: "+randomY+"px; left:"+random+"px'>"+arr_word[i]+"</div>";
+					
+				}
+			}
+			function onestep_down(){
+				var div_words = document.getElementsByClassName("div_word");
+
+				for(var i = 0; i < div_words.length; i++){
+					var str_top = div_words[i].style.top; // div의 속성 값 중 style-top 불러오기
+//					str_top = str_top.replace("px",""); // 숫자만 가져오기 위해서 px를 지움.
+//					var int_top = Number(str_top); //px를 지운 문자열인 값을 숫자로 변경
+					var int_top = parseInt(str_top); //parseInt 쓰면 숫자만 빼올 수 있다.
+					if(int_top > 800){ // top의 위치가 설정 값보다 커지면 
+						alert("당신이 졌습니다");
+						clearInterval(idx_time); // interval 중지 메서드
+						break; // for문 빠져나오기
+					}
+					int_top += 1;	
+					div_words[i].style.top = int_top+"px"; //top 값을 적용시키려면 px가 붙어있어야 하기 때문에 다시 px 붙이는 작업
+				}
+
+			}
+			
+			function fn_press(e){
+				if(e.keyCode == 13){ //엔터의 키 값은 13이다 / 엔터가 눌리면. 
+					fn_compare();
+				
+					
+				}
+			}
+			function fn_compare(){
+				var input_txt = document.getElementById("input_txt").value;
+				var div_words = document.getElementsByClassName("div_word");
+					for(var i = div_words.length-1; i >= 0 ; i--){
+						var str_compare = div_words[i].innerHTML;
+						if( str_compare == input_txt){
+							div_words[i].remove();
+							score++;
+							var objScore = document.getElementById("div_score");
+							objScore.innerHTML = score;
+							
+							if(score >= 10){
+								alert("당신이 이겼습니다 " + score + " 점");
+								clearInterval(idx_time);
+							}
+							break;
+						}
+					}
+				document.getElementById("input_txt").value = ""; // 텍스트 입력 후 공백창으로 만드려고
+			}
+		
+		</script>
+	</head>
+	<body id="my_body">
+
+		<input id="input_txt" type="text" onkeypress="fn_press(event)" />
+		<a href="javascript:gamestart()" >시작</a></br>
+		<span style="position:relative; color:white">현재 스코어 : </span>
+		<span id="div_score" style="position:static; color:white"></span>
+		
+<!-- 		<div class='div_word' style = 'top: 50px'>치킨</div> -->
+		
+	</body>

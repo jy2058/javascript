@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Document</title>
+		<script src="jquery-1.12.4.js"></script>
+		
+		<script type="text/javascript">
+			function init(){
+				//alert(document.getElementById("myname").type);
+				alert($("#myname").prop("type"));
+			}
+			function myClick(){
+				alert("good job");
+			}
+			
+			// 객체는 $() 안에 "" 없이 쓴다.
+			//body 에 있던 onload를 없애고 이렇게 바꿔서 쓴다.
+			//자주쓰니까 중요!!!!!
+			$(document).ready(function(){
+				init();
+			});
+		</script>
+	</head>
+	<body>
+		<form action="http://www.daum.net">
+			이름: <input id="myname" name="myname" type="text" value="홍길동"><br>
+			<input type="button" value="클릭" onclick="myClick()">
+			<input type="submit"><br>
+		</form>
+	</body>

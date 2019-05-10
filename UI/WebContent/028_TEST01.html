@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Document</title>
+		<style type="text/css">
+			#t1{
+				width: 20px
+			}
+			#t2{
+				width: 20px
+			}
+			#result{
+				width: 30px
+			}
+			#b1{
+				width: 117px
+			}
+		</style>
+		<script type="text/javascript">		
+			function myClick(){
+				var a = document.getElementById("t1").value;
+				var b = document.getElementById("t2").value;
+				var c = Number(a) + Number(b);
+			    
+				var obj3 = document.getElementById("result");
+			    obj3.value = c;
+	
+			}
+		</script>
+	</head>
+	<body>
+		<input id="t1" type="text">
+		+
+		<input id="t2" type="text">
+		=
+		<input id="result" type="text"><br>
+		
+		<input type="button" id = "b1" onclick="myClick()" value ="계산하기">		
+
+	</body>
+</html>

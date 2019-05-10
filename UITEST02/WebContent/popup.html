@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="jquery-1.12.4.js"></script>
+<script type="text/javascript">
+	function fn_search(){
+		$.ajax({
+			type : "get",
+			url : "myservletsearch",
+			data : { param : $("input[name=street]").val() },
+			dataType : "json",
+
+			success : function(data) {
+				var text = "";			
+				for(var i = 0; i < data.length; i++){
+					text += "<tr ondblclick=\"fn_fix(this)\">";
+					text += "	<td name=\"zipcode\">"+data[i].zipcode+"</td>";
+					text += "	<td name=\"addr1\">"+data[i].city+" "
+													+data[i].gu+" "
+													+data[i].street+" </td>";
+					text += "	<td name=\"addr2\">"+data[i].street_num+"</td>";
+					text += "</tr>";
+				}
+				$("#mytbody").html(text);
+			},
+			
+			error : function(xhr, status, error) {
+				console.log("에러!: " + error);
+			},
+		});					
+	}
+	
+	function fn_fix(obj) {
+
+		document.getElementsByName("zipcode")[obj.rowIndex - 1].childNodes[0].nodeValue;
+		document.getElementsByName("addr1")[obj.rowIndex - 1].childNodes[0].nodeValue;
+		document.getElementsByName("addr2")[obj.rowIndex - 1].childNodes[0].nodeValue;
+
+		window.opener.document.frm.zipcode.value = document
+				.getElementsByName("zipcode")[obj.rowIndex - 1].childNodes[0].nodeValue;
+		window.opener.document.frm.addr1.value = document
+				.getElementsByName("addr1")[obj.rowIndex - 1].childNodes[0].nodeValue;
+		window.opener.document.frm.addr2.value = document
+				.getElementsByName("addr2")[obj.rowIndex - 1].childNodes[0].nodeValue;
+
+		window.close();
+	}
+</script>
+</head>
+
+<body>
+	<table>
+		<tr>
+			<td>동 입력</td>
+			<td><input name="street" type="text""/></td>
+			<td><input type="button" value="검색" onclick="fn_search()"/></td>
+		</tr>
+		<tbody id="mytbody" ondblclick="fn_fix(this)">
+			<tr>
+				<td colspan="3" >
+				검색 자료가 없습니다.
+				</td>
+			</tr>
+		</tbody>
+	
+	</table>
+</body>
+</html> 

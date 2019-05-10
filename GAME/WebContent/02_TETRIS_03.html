@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>02_TETRIS_03</title>
+<script>
+	var arr2d_block = new Array();// 블럭이 나오는 화면
+	var arr2d_stack = new Array();// 블럭이 쌓인 화면
+	var arr2d_displ = new Array();// arr2D_block + arr2D_stack
+
+	var canvas;
+	var ctx;
+	window.onload = function() {
+		init_arr();
+		canvas = document.getElementById("canvas");
+		if (canvas == null || canvas.getContext == null)
+			return;
+		ctx = canvas.getContext("2d");
+		draw();
+	}
+
+	function init_arr() {
+		for (var i = 0; i < 20; i++) { //[20,10]배열 만들기
+			var row_block = new Array();
+			var row_stack = new Array();
+			var row_displ = new Array();
+			for (var j = 0; j < 10; j++) {
+				row_block.push(0);
+				row_stack.push(0);
+				row_displ.push(0);
+			}
+			arr2d_block.push(row_block);
+			arr2d_stack.push(row_stack);
+			arr2d_displ.push(row_displ);
+		}
+
+		arr2d_stack[19][0] = 2;
+		arr2d_stack[19][1] = 2;
+		arr2d_stack[19][2] = 2;
+		arr2d_stack[19][3] = 2;
+
+		arr2d_stack[19][4] = 2;
+		arr2d_stack[19][5] = 2;
+		arr2d_stack[19][6] = 2;
+		arr2d_stack[19][7] = 2;
+
+		console.log(arr2d_block);
+		console.log(arr2d_stack);
+		console.log(arr2d_displ);
+	}
+
+	var block_type = 7; // 1: 방향 없는 애 
+	var block_status = 1; // 블록 타입에 따라 방향 바뀐 상태
+	var block_i = 1; // 위치
+	var block_j = 4; // 위치 / 블럭이 가운데 위치
+
+	var colors = [ "gray", "#86E57F", "#F29661", "#5CD1E5", "#F15F5F", "#FAED7D",
+			"#6799FF", "#A566FF" ];
+	function draw() {
+		for (var i = 0; i < 20; i++) {
+			for (var j = 0; j < 10; j++) {
+				var index_color = arr2d_displ[i][j]; // arr2D_displ의 값이 0이면 gray 1이면 yellow 그려주기
+				ctx.fillStyle = colors[index_color];
+				ctx.fillRect(j * 20, i * 20, 19, 19);// 위치를 20씩 이동
+			}
+		}
+	}
+
+	function fn_keyboard(e){
+		fn_move(e.keyCode);
+	}
+	
+	// 자동으로 내려가게 하는 메서드
+	function fn_start(){
+		fn_move(38);
+		fn_move(38);
+		fn_move(38);
+		fn_move(38);
+		fn_move(38);
+		//setInterval("fn_move(40)", 1000);
+	}
+	
+	function fn_move(keycode) {
+
+		// 원복위치 저장
+		var before_i = block_i;
+		var before_j = block_j;
+		var before_status = block_status;
+
+		/*
+		32 = space
+		37 = left
+		38 = up
+		39 = right
+		40 = down
+		 */
+
+		if (keycode == 40) {
+			block_i++;
+		}
+		if (keycode == 37) {
+			block_j--;
+		}
+		if (keycode == 39) {
+			block_j++;
+		}
+		if (keycode == 38) {
+			changeStatus();
+		}
+
+		//setBlock();
+
+		var flag = isCollisionWithSetBlock();
+
+		if (flag) { // 충돌 나면 충돌 전 값 보여주기
+			block_i = before_i;
+			block_j = before_j;
+			block_status = before_status;
+			setBlock();
+
+			if (keycode == 40) {
+				goBlockToStack();
+				checkAndRemoveStack();
+				
+				for(var j = 0; j < arr2d_stack[3].length; j++){
+					if(arr2d_stack[3][j] != 0){
+						alert("lose");
+						return;
+					}
+				}
+				
+				block_type =  (parseInt)(Math.random() * 7) + 1;
+				console.log(block_type);
+				block_status = 1;
+				block_i = 1;
+				block_j = 4;
+				setBlock();
+
+				setDispl();
+				draw();
+			}
+
+			return; // 밑으로 더 가지 않게
+		}
+		setDispl();
+		draw();
+
+		console.log(arr2d_displ);
+	}
+	
+	// 한 줄 쌓이면 삭제되는 메서드
+	function checkAndRemoveStack() {
+		
+		
+		var arr_temp = new Array(); //지워지는 거 빼고 난 모습 저장할 변수
+		
+		for (var i = 0; i < arr2d_displ.length; i++) {
+			var cnt10 = 0;
+			for (var j = 0; j < arr2d_displ[i].length; j++) {
+				if (arr2d_stack[i][j] > 0) {
+					cnt10++;
+				}
+			}
+			
+			if(cnt10 < 10){
+				arr_temp.push(arr2d_stack[i]);
+			}
+
+		}
+		
+		var cnt_refill = arr2d_displ.length - arr_temp.length; // 빠진 개수만큼
+		
+		var obj_my_count = document.getElementById("my_count");
+		var my_count = parseInt(obj_my_count.innerHTML);
+		
+		my_count = my_count - cnt_refill;
+		obj_my_count.innerHTML = my_count;
+		
+		if(my_count <= 0){
+			alert("mission complete");
+		}
+		
+		var arr_refill = new Array();
+		
+		for(var i = 0; i < cnt_refill; i++){ // 빠진 거 만큼 넣어주기
+			arr_refill.push([0,0,0,0,0, 0,0,0,0,0]);
+		}
+		
+		arr2d_stack = arr_refill.concat(arr_temp); // 채운 모습을 스택에 저장
+		
+		console.log(arr_temp);
+	}
+
+	// 블럭이 스택에 닿았을 때 블럭을 스택화면에 쌓기
+	function goBlockToStack() {
+		for (var i = 0; i < arr2d_displ.length; i++) {
+			for (var j = 0; j < arr2d_displ[i].length; j++) {
+				if (arr2d_block[i][j] > 0) {
+					arr2d_stack[i][j] = arr2d_block[i][j];
+				}
+			}
+		}
+	}
+
+	// 충돌여부
+	function isCollisionWithSetBlock() {
+
+		try {
+			setBlock();
+		} catch (e) {
+			return true;
+		}
+
+		//벽에 부딪혔을 경우 충돌확인
+		var cnt = 0;
+		for (var i = 0; i < arr2d_displ.length; i++) {
+			for (var j = 0; j < arr2d_displ[i].length; j++) {
+				if (arr2d_block[i][j] > 0) {
+					cnt++;
+				}
+			}
+		}
+		if (cnt < 4) {
+			return true;
+		}
+
+		// 스택과 블럭이 같아지면 충돌
+		for (var i = 0; i < arr2d_displ.length; i++) {
+			for (var j = 0; j < arr2d_displ[i].length; j++) {
+				if (arr2d_block[i][j] > 0 && arr2d_stack[i][j] > 0) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+
+	}
+	// 블럭 타입별 상태 변환(회전시키기)
+	function changeStatus() {
+		if (block_type == 2 || block_type == 3 || block_type == 4) {
+			if (block_status == 1) {
+				block_status = 2;
+			} else if (block_status == 2) {
+				block_status = 1;
+			}
+		}
+		if (block_type == 5 || block_type == 6 || block_type == 7) {
+			if (block_status == 1) {
+				block_status = 2;
+			} else if (block_status == 2) {
+				block_status = 3;
+			} else if (block_status == 3) {
+				block_status = 4;
+			} else if (block_status == 4) {
+				block_status = 1;
+			}
+		}
+	}
+	function setBlock() {
+		setZero(arr2d_block);
+		// 블럭 타입별 상태 변환(회전시 모양 바꾸기)
+		if (block_type == 1) {
+			arr2d_block[block_i][block_j] = block_type;
+			arr2d_block[block_i + 1][block_j] = block_type;
+			arr2d_block[block_i][block_j + 1] = block_type;
+			arr2d_block[block_i + 1][block_j + 1] = block_type;
+		}
+		if (block_type == 2) {
+			if (block_status == 1) {
+				arr2d_block[block_i - 2][block_j] = block_type;
+				arr2d_block[block_i - 1][block_j] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i + 1][block_j] = block_type;
+			}
+			if (block_status == 2) {
+				arr2d_block[block_i][block_j - 2] = block_type;
+				arr2d_block[block_i][block_j - 1] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j + 1] = block_type;
+			}
+		}
+		if (block_type == 3) {
+			if (block_status == 1) {
+				arr2d_block[block_i - 1][block_j] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j + 1] = block_type;
+				arr2d_block[block_i + 1][block_j + 1] = block_type;
+			}
+			if (block_status == 2) {
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j + 1] = block_type;
+				arr2d_block[block_i + 1][block_j - 1] = block_type;
+				arr2d_block[block_i + 1][block_j] = block_type;
+			}
+		}
+		if (block_type == 4) {
+			if (block_status == 1) {
+				arr2d_block[block_i - 1][block_j] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j - 1] = block_type;
+				arr2d_block[block_i + 1][block_j - 1] = block_type;
+			}
+			if (block_status == 2) {
+				arr2d_block[block_i][block_j - 1] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i + 1][block_j] = block_type;
+				arr2d_block[block_i + 1][block_j + 1] = block_type;
+			}
+		}
+		if (block_type == 5) {
+			if (block_status == 1) {
+				arr2d_block[block_i - 1][block_j] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j - 1] = block_type;
+				arr2d_block[block_i][block_j + 1] = block_type;
+			}
+			if (block_status == 2) {
+				arr2d_block[block_i - 1][block_j] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j + 1] = block_type;
+				arr2d_block[block_i + 1][block_j] = block_type;
+			}
+			if (block_status == 3) {
+				arr2d_block[block_i][block_j - 1] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j + 1] = block_type;
+				arr2d_block[block_i + 1][block_j] = block_type;
+			}
+			if (block_status == 4) {
+				arr2d_block[block_i - 1][block_j] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j - 1] = block_type;
+				arr2d_block[block_i + 1][block_j] = block_type;
+			}
+		}
+		if (block_type == 6) {
+			if (block_status == 1) {
+				arr2d_block[block_i - 1][block_j] = block_type;
+				arr2d_block[block_i - 1][block_j + 1] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i + 1][block_j] = block_type;
+			}
+			if (block_status == 2) {
+				arr2d_block[block_i][block_j - 1] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j + 1] = block_type;
+				arr2d_block[block_i + 1][block_j + 1] = block_type;
+			}
+			if (block_status == 3) {
+				arr2d_block[block_i - 1][block_j] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i + 1][block_j - 1] = block_type;
+				arr2d_block[block_i + 1][block_j] = block_type;
+			}
+			if (block_status == 4) {
+				arr2d_block[block_i - 1][block_j - 1] = block_type;
+				arr2d_block[block_i][block_j - 1] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j + 1] = block_type;
+			}
+		}
+		if (block_type == 7) {
+			if (block_status == 1) {
+				arr2d_block[block_i - 1][block_j - 1] = block_type;
+				arr2d_block[block_i - 1][block_j] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i + 1][block_j] = block_type;
+			}
+			if (block_status == 2) {
+				arr2d_block[block_i - 1][block_j + 1] = block_type;
+				arr2d_block[block_i][block_j - 1] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j + 1] = block_type;
+			}
+			if (block_status == 3) {
+				arr2d_block[block_i - 1][block_j] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i + 1][block_j] = block_type;
+				arr2d_block[block_i + 1][block_j + 1] = block_type;
+			}
+			if (block_status == 4) {
+				arr2d_block[block_i][block_j - 1] = block_type;
+				arr2d_block[block_i][block_j] = block_type;
+				arr2d_block[block_i][block_j + 1] = block_type;
+				arr2d_block[block_i + 1][block_j - 1] = block_type;
+			}
+		}
+	}
+
+	// 스택과 블럭 화면에 보여주기
+	function setDispl() {
+		setZero(arr2d_displ);
+		for (var i = 0; i < arr2d_displ.length; i++) {
+			for (var j = 0; j < arr2d_displ[i].length; j++) {
+				if (arr2d_block[i][j] > 0) {
+					arr2d_displ[i][j] = arr2d_block[i][j];
+				}
+				if (arr2d_stack[i][j] > 0) {
+					arr2d_displ[i][j] = arr2d_stack[i][j];
+				}
+			}
+		}
+	}
+
+	// 화면에 아무것도 없게 초기화
+	function setZero(arr2d) {
+		for (var i = 0; i < arr2d.length; i++) {
+			for (var j = 0; j < arr2d[i].length; j++) {
+				arr2d[i][j] = 0;
+			}
+		}
+	}
+</script>
+
+</head>
+<body onkeydown="fn_keyboard(event)">
+	<div id="fn_start" onclick="fn_start()">start</div>
+	<div id="my_count">10</div>
+	<!-- this와 마찬가지로 정보를 보내줌 -->
+	<canvas id="canvas" width="400" height="500">
+      이 브라우저는 캔버스를 지원하지 않습니다.
+   </canvas>
+</body>
+</html>

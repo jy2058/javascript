@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Document</title>
+		<script type="text/javascript">
+			function myClick(){
+				var obj = document.getElementsByName("gugu")[0];
+				var value = obj.options[obj.selectedIndex].value;
+				for(var i = 1; i <= 9; i++){
+					document.write(value + "*" +i+ "=" + (value * i) + "<br>");
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<select name="gugu">
+			<option value="2" selected>2단</option>
+			<option value="3">3단</option>
+			<option value="4">4단</option>
+			<option value="5">5단</option>
+			<option value="6">6단</option>
+			<option value="7">7단</option>
+			<option value="8">8단</option>
+			<option value="9">9단</option>
+			
+		</select>
+		<input type="button" onclick = "myClick()" value="show"/>
+	</body>
+</html>

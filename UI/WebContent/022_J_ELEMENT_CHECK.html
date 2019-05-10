@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Document</title>
+		<script src="jquery-1.12.4.js"></script>
+		<script type="text/javascript">
+			function myClick(){
+// 				var arr = document.getElementsByName("china");
+// 				var str_china = "";
+// 				for(var i = 0; i< arr.length; i++){
+// 					if(arr[i].checked){
+// 						str_china += arr[i].value;
+// 					}
+// 				}alert(str_china);
+				
+				/*
+				JQuery로 아래와 같이 사용
+				*/
+				
+				var str_china = "";
+				$("input[name=china]:checked").each(function() {
+					str_china += $(this).val(); // 체크된 것 for 문 돌기(체크된 거 다 가져오기)
+				});
+				alert(str_china); 		
+				
+				
+// 				var arr = document.getElementsByName("korea");
+// 				var str_korea = "";
+// 				for(var i = 0; i< arr.length; i++){
+// 					if(arr[i].checked){
+// 						str_korea += arr[i].value;
+// 					}
+// 				}alert(str_korea);
+				
+				/*
+				JQuery로 아래와 같이 사용
+				*/
+				
+				var str_korea = "";
+				$("input[name=korea]:checked").each(function(){
+					str_korea += $(this).val(); // this는 "input[name=korea]:checked" 의미
+				});
+				alert(str_korea);
+			}
+		</script>
+	</head>
+	<body>
+		좋아하는 중국음식: 
+		<input name="china" type="checkbox" value="z" checked> 짬뽕
+		<input name="china" type="checkbox" value="u"> 울면
+		<input name="china" type="checkbox" value="t"> 탕수육
+		<br>
+		좋아하는 한국음식: 
+		<input name="korea" type="checkbox" value="c" checked > 치킨
+		<input name="korea" type="checkbox" value="d"> 닭갈비
+		<input name="korea" type="checkbox" value="g"> 찜닭 
+		<br>
+		<input type="button" onclick = "myClick()" value="보여줘">
+	</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Document</title>
+		<script type="text/javascript">
+			function myClick(){
+				//alert("good job");
+				//var now = new Date();
+				var now = new Date(2018,11-1,1,12,27,0);
+				
+				var year = now.getFullYear();
+				var month = now.getMonth()+1;
+				var day = now.getDate();
+				var hour = now.getHours();
+				var minute = now.getMinutes();
+				var second = now.getSeconds();
+				
+				var day_week = now.getDay();
+				
+				alert("month:" +month);
+				alert("day:" +day);
+				
+				alert("hour:" +hour);
+				alert("minute:" +minute);
+				alert("second:" +second);
+				alert("day_week:" +day_week);
+				
+		
+			
+			}
+		</script>
+	</head>
+	<body>
+		<a href="javascript:myClick()">클릭</a>
+	</body>
+</html>

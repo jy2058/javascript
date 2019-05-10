@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;MyAjax.java&apos; to &apos;GAMESOCKET/src/kr.patago.web&apos;&#x0D;&#x0A;- Original project: &apos;SP&apos;&#x0D;&#x0A;- Destination element: &apos;GAMESOCKET/src/kr.patago.web&apos;&#x0D;&#x0A;- Original element: &apos;com.patagonia.web.MyAjax.java&apos;" description="Copy compilation unit" destination="=GAMESOCKET/src&lt;kr.patago.web" element1="/src&lt;com.patagonia.web{MyAjax.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1546911289910" units="1" version="1.0"/>
+</session>

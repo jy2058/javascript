@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>02_TETRIS_03</title>
+<script>
+   var arr2d_block = new Array();// 블럭이 나오는 화면
+   var arr2d_stack = new Array();// 블럭이 쌓인 화면
+   var arr2d_displ = new Array();// arr2D_block + arr2D_stack
+
+   var canvas;
+   var ctx;
+   window.onload = function() {
+      init_arr();
+      canvas = document.getElementById("canvas");
+      if (canvas == null || canvas.getContext == null) return;
+      ctx = canvas.getContext("2d");
+      draw();
+   }
+   
+   function init_arr() {
+      for (var i = 0; i < 20; i++) { //[20,10]배열 만들기
+         var row_block = new Array();
+         var row_stack = new Array();
+         var row_displ = new Array();
+         for (var j = 0; j < 10; j++) {
+            row_block.push(0);
+            row_stack.push(0);
+            row_displ.push(0);
+         }
+         arr2d_block.push(row_block);
+         arr2d_stack.push(row_stack);
+         arr2d_displ.push(row_displ);
+      }
+      
+      arr2d_stack[19][0] = 2;
+      arr2d_stack[19][1] = 2;
+      arr2d_stack[19][2] = 2;
+      arr2d_stack[19][3] = 2;
+      
+      arr2d_stack[19][4] = 2;
+      arr2d_stack[19][5] = 2;
+      arr2d_stack[19][6] = 2;
+      arr2d_stack[19][7] = 2;
+      
+      console.log(arr2d_block);
+      console.log(arr2d_stack);
+      console.log(arr2d_displ);
+   }
+   
+   var block_type     = 7; // 1: 방향 없는 애 
+   var block_status = 1; // 블록 타입에 따라 방향 바뀐 상태
+   var block_i     = 0; // 위치
+   var block_j     = 4; // 위치 / 블럭이 가운데 위치
+   
+   var colors = ["gray", "skyblue", "pink", "red", "orange", "yellow", "green", "purple"];
+   function draw() {
+      for (var i = 0; i < 20; i++) {
+         for (var j = 0; j < 10; j++) {
+            var index_color = arr2d_displ[i][j]; // arr2D_displ의 값이 0이면 gray 1이면 yellow 그려주기
+            ctx.fillStyle = colors[index_color];
+            ctx.fillRect(j * 20, i * 20, 19, 19);// 위치를 20씩 이동
+         }
+      }
+   }
+   
+   function fn_keyboard(e) {
+		/*
+		32 = space
+		37 = left
+		38 = up
+		39 = right
+		40 = down
+	*/
+	   
+      var keycode = e.keyCode;
+      console.log(keycode);
+      if (keycode == 40) {
+         block_i++;
+      }
+      if (keycode == 37) {
+         block_j--;
+      }
+      if (keycode == 39) {
+         block_j++;
+      }
+      if (keycode == 38) {
+         changeStatus();
+      }
+      
+      setBlock();
+      setDispl();
+      draw();
+      
+      console.log(arr2d_displ);
+   }
+   function changeStatus() {
+      if (block_type == 2 || block_type == 3 || block_type == 4) {
+         if (block_status == 1) {
+            block_status = 2;
+         }
+         else if (block_status == 2) {
+            block_status = 1;
+         }
+      }
+      if (block_type == 5 || block_type == 6 || block_type == 7) {
+         if (block_status == 1) {
+            block_status = 2;
+         }
+         else if (block_status == 2) {
+            block_status = 3;
+         }
+         else if (block_status == 3) {
+            block_status = 4;
+         }
+         else if (block_status == 4) {
+            block_status = 1;
+         }
+      }
+   }
+   function setBlock() {
+      setZero(arr2d_block);
+      if (block_type == 1) {
+         arr2d_block[block_i      ][block_j   ] = block_type;
+         arr2d_block[block_i + 1][block_j   ] = block_type;
+         arr2d_block[block_i      ][block_j + 1] = block_type;
+         arr2d_block[block_i + 1][block_j + 1] = block_type;
+      }
+      if (block_type == 2) {
+         if (block_status == 1) {
+            arr2d_block[block_i   - 2][block_j] = block_type;
+            arr2d_block[block_i - 1][block_j] = block_type;
+            arr2d_block[block_i      ][block_j] = block_type;
+            arr2d_block[block_i + 1][block_j] = block_type;
+         }
+         if (block_status == 2) {
+            arr2d_block[block_i][block_j - 2] = block_type;
+            arr2d_block[block_i][block_j - 1] = block_type;
+            arr2d_block[block_i][block_j   ] = block_type;
+            arr2d_block[block_i][block_j + 1] = block_type;
+         }
+      }
+      if (block_type == 3) {
+         if (block_status == 1) {
+            arr2d_block[block_i   - 1][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j + 1] = block_type;
+            arr2d_block[block_i + 1][block_j + 1] = block_type;
+         }
+         if (block_status == 2) {
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j + 1] = block_type;
+            arr2d_block[block_i + 1][block_j - 1] = block_type;
+            arr2d_block[block_i + 1][block_j   ] = block_type;
+         }
+      }
+      if (block_type == 4) {
+         if (block_status == 1) {
+            arr2d_block[block_i   - 1][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j - 1] = block_type;
+            arr2d_block[block_i + 1][block_j - 1] = block_type;
+         }
+         if (block_status == 2) {
+            arr2d_block[block_i      ][block_j - 1] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i + 1][block_j   ] = block_type;
+            arr2d_block[block_i + 1][block_j + 1] = block_type;
+         }
+      }
+      if (block_type == 5) {
+         if (block_status == 1) {
+            arr2d_block[block_i   - 1][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j - 1] = block_type;
+            arr2d_block[block_i      ][block_j + 1] = block_type;
+         }
+         if (block_status == 2) {
+            arr2d_block[block_i   - 1][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j + 1] = block_type;
+            arr2d_block[block_i   + 1][block_j    ] = block_type;
+         }
+         if (block_status == 3) {
+            arr2d_block[block_i      ][block_j - 1] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j + 1] = block_type;
+            arr2d_block[block_i   + 1][block_j    ] = block_type;
+         }
+         if (block_status == 4) {
+            arr2d_block[block_i   - 1][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j - 1] = block_type;
+            arr2d_block[block_i   + 1][block_j    ] = block_type;
+         }
+      }
+      if (block_type == 6) {
+         if (block_status == 1) {
+            arr2d_block[block_i   - 1][block_j   ] = block_type;
+            arr2d_block[block_i   - 1][block_j + 1] = block_type;
+            arr2d_block[block_i      ][block_j    ] = block_type;
+            arr2d_block[block_i   + 1][block_j   ] = block_type;
+         }
+         if (block_status == 2) {
+            arr2d_block[block_i      ][block_j - 1] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j + 1] = block_type;
+            arr2d_block[block_i   + 1][block_j + 1] = block_type;
+         }
+         if (block_status == 3) {
+            arr2d_block[block_i   - 1][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i + 1][block_j - 1] = block_type;
+            arr2d_block[block_i   + 1][block_j   ] = block_type;
+         }
+         if (block_status == 4) {
+            arr2d_block[block_i - 1][block_j - 1] = block_type;
+            arr2d_block[block_i      ][block_j - 1] = block_type;
+            arr2d_block[block_i      ][block_j    ] = block_type;
+            arr2d_block[block_i      ][block_j + 1] = block_type;
+         }
+      }
+      if (block_type == 7) {
+         if (block_status == 1) {
+            arr2d_block[block_i   - 1][block_j - 1] = block_type;
+            arr2d_block[block_i   - 1][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j    ] = block_type;
+            arr2d_block[block_i   + 1][block_j   ] = block_type;
+         }
+         if (block_status == 2) {
+            arr2d_block[block_i - 1][block_j + 1] = block_type;
+            arr2d_block[block_i      ][block_j - 1] = block_type;
+            arr2d_block[block_i      ][block_j    ] = block_type;
+            arr2d_block[block_i      ][block_j + 1] = block_type;
+         }
+         if (block_status == 3) {
+            arr2d_block[block_i   - 1][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i + 1][block_j    ] = block_type;
+            arr2d_block[block_i   + 1][block_j + 1] = block_type;
+         }
+         if (block_status == 4) {
+            arr2d_block[block_i    ][block_j - 1] = block_type;
+            arr2d_block[block_i      ][block_j   ] = block_type;
+            arr2d_block[block_i      ][block_j + 1] = block_type;
+            arr2d_block[block_i + 1][block_j - 1] = block_type;
+         }
+      }
+   }
+   function setDispl() {
+      setZero(arr2d_displ);
+      for (var i = 0; i < arr2d_displ.length; i++) {
+         for (var j = 0; j < arr2d_displ[i].length; j++) {
+            if (arr2d_block[i][j] > 0) {
+               arr2d_displ[i][j] = arr2d_block[i][j];
+            }
+            if (arr2d_stack[i][j] > 0) {
+               arr2d_displ[i][j] = arr2d_stack[i][j];
+            }
+         }
+      }
+   }
+   function setZero(arr2d) {
+      for (var i = 0; i < arr2d.length; i++) {
+         for (var j = 0; j < arr2d[i].length; j++) {
+            arr2d[i][j] = 0;
+         }
+      }
+   }
+</script>
+
+</head>
+<body onkeydown="fn_keyboard(event)"> <!-- this와 마찬가지로 정보를 보내줌 -->
+   <canvas id="canvas" width="400" height="500">
+      이 브라우저는 캔버스를 지원하지 않습니다.
+   </canvas>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.sql.DatabaseMetaData"/>
+<fullyQualifiedTypeName name="javax.management.RuntimeErrorException"/>
+<fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+<fullyQualifiedTypeName name="java.lang.ClassNotFoundException"/>
+<fullyQualifiedTypeName name="java.sql.SQLException"/>
+<fullyQualifiedTypeName name="java.sql.DriverManager"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+<fullyQualifiedTypeName name="java.beans.Statement"/>
+<fullyQualifiedTypeName name="java.sql.Statement"/>
+<fullyQualifiedTypeName name="com.patagonia.dao.OracleDao"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="com.patagonia.dao.PataVO"/>
+<fullyQualifiedTypeName name="sun.util.calendar.BaseCalendar.Date"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="java.io.PrintWriter"/>
+<fullyQualifiedTypeName name="com.patagonia.dao.EmpDao"/>
+<fullyQualifiedTypeName name="com.patagonia.model.EmpVO"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.patagonia.dao.CompanyDao"/>
+<fullyQualifiedTypeName name="com.patagonia.model.CompanyVO"/>
+<fullyQualifiedTypeName name="kr.ddit.dao.MakerDao"/>
+<fullyQualifiedTypeName name="kr.ddit.vo.MakerVO"/>
+<fullyQualifiedTypeName name="kr.ddit.dao.CarDao"/>
+<fullyQualifiedTypeName name="kr.ddit.vo.CarVO"/>
+<fullyQualifiedTypeName name="kr.ddit.dao.Co_addrDao"/>
+<fullyQualifiedTypeName name="kr.ddit.vo.Co_addrVO"/>
+<fullyQualifiedTypeName name="kr.ddit.vo.Co_userVO"/>
+<fullyQualifiedTypeName name="kr.ddit.dao.Co_userDao"/>
+<fullyQualifiedTypeName name="kr.patago.dao.IOmokDao"/>
+<fullyQualifiedTypeName name="kr.patago.service.IOmokService"/>
+<fullyQualifiedTypeName name="test.OmokTest"/>
+<fullyQualifiedTypeName name="kr.patago.web.MyOmok"/>
+<fullyQualifiedTypeName name="kr.patago.dao.OmokDaoImpl"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="kr.patago.vo.OmokVO"/>
+<fullyQualifiedTypeName name="kr.patago.service.OmokServiceImpl"/>
+<fullyQualifiedTypeName name="Memory"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+</qualifiedTypeNameHistroy>
